@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Login Page</title>
+    {% load static %}
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and Background */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('/media/image/loginuser.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Login Container */
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.8); /* Light opaque background for the form */
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .login-container:hover {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 30px;
+            color: #333;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* Form Groups */
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            background-color: #f8f8f8;
+            color: #333;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border: 1px solid #00d2ff;
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 210, 255, 0.7);
+        }
+
+        /* Submit Button */
+        input[type="submit"] {
+            width: 100%;
+            padding: 14px;
+            background-color: #3a7bd5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #00d2ff;
+            transform: translateY(-2px);
+        }
+
+        input[type="submit"]:active {
+            background-color: #007db5;
+            transform: translateY(0);
+        }
+
+        /* Message */
+        .msg {
+            text-align: center;
+            margin-top: 15px;
+            color: #ffcc00;
+            font-size: 1rem;
+        }
+
+        /* Links Section */
+        .links {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .links p {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .links a {
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .links a:hover {
+            color: #007db5;
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 500px) {
+            .login-container {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .form-group input {
+                font-size: 14px;
+                padding: 12px;
+            }
+
+            input[type="submit"] {
+                font-size: 14px;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <h1>Customer Login</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+            <input type="submit" value="Login">
+            <div class="msg">{{ msg }}</div>
+            <div class="links">
+                <p>
+                    <a href="{% url 'customer_signup' %}">Register as Customer</a> | 
+                    <a href="{% url 'resetPassword' %}">Forgot Password</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

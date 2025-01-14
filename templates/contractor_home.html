@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contractor Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #f3f4f7, #e4e8ed); /* Subtle gradient background */
+            color: #333;
+        }
+
+        .navbar {
+            background-color: #4CAF50; /* Green header */
+            margin-bottom: 2rem;
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: white !important;
+        }
+
+        .navbar-brand:hover,
+        .nav-link:hover {
+            color: #f3f4f7 !important;
+        }
+
+        main.container {
+            max-width: 900px;
+            margin: auto;
+            padding: 1rem;
+            background: white;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        section {
+            margin-bottom: 2rem;
+        }
+
+        section h2 {
+            font-size: 1.8rem;
+            color: #4CAF50;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 0.3rem;
+        }
+
+        ul.list-group li {
+            background: #f9f9f9;
+            margin-bottom: 0.5rem;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        ul.list-group li:hover {
+            transform: scale(1.02);
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        ul.list-group li a {
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        ul.list-group li a:hover {
+            color: #388e3c;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Event Management</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contractor_profile' contractor.pk %}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'create_event' %}">Create Event</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user_logout' %}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Contractor Profile Section -->
+        <section>
+            <h2>Your Profile</h2>
+            <p><strong>Company Name:</strong> {{ contractor.company_name }}</p>
+            <p><strong>Contact:</strong> {{ contractor.phone }}</p>
+            <p><strong>Email:</strong> {{ contractor.email }}</p>
+            <p><strong>Details:</strong> {{ contractor.contact_details }}</p>
+            <a href="{% url 'contractor_profile' contractor.pk %}" class="btn btn-primary">Edit Profile</a>
+        </section>
+
+        <!-- Events Section -->
+        <section>
+            <h2>Your Events</h2>
+            {% if events %}
+                <ul class="list-group">
+                    {% for event in events %}
+                        <li class="list-group-item">
+                            <a href="{% url 'event_detail' event.pk %}">{{ event.title }}</a>
+                            <span class="text-muted">({{ event.date }})</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No events created yet.</p>
+            {% endif %}
+        </section>
+
+        <!-- Create Event Section -->
+        <section>
+            <h2>Create a New Event</h2>
+            <p>Ready to create a new event? Get started now!</p>
+            <a href="{% url 'create_event' %}" class="btn btn-success">Create Event</a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Event Management</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

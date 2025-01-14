@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Event</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #8e9eab, #eef2f3);
+            color: #333;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .back-button {
+            margin-bottom: 1rem;
+        }
+
+        .back-button a {
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Back Button -->
+        <div class="back-button">
+            <a href="{% url 'contractor_home' %}" class="btn btn-secondary">← Back to Home</a>
+        </div>
+
+        <h1>Create Event</h1>
+
+        <!-- Display feedback messages -->
+        {% if messages %}
+            <div class="mb-3">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="title" class="form-label">Event Title</label>
+                <input type="text" id="title" name="title" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea id="description" name="description" class="form-control" rows="4" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label">Date</label>
+                <input type="date" id="date" name="date" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="time" class="form-label">Time</label>
+                <input type="time" id="time" name="time" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" id="location" name="location" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="capacity" class="form-label">Capacity</label>
+                <input type="number" id="capacity" name="capacity" class="form-control" min="1" required>
+            </div>
+            <div class="mb-3">
+                <label for="ticket_price" class="form-label">Ticket Price</label>
+                <input type="number" id="ticket_price" name="ticket_price" class="form-control" step="0.01" min="0" required>
+            </div>
+            <div class="mb-3">
+                <label for="poster_image" class="form-label">Poster Image</label>
+                <input type="file" id="poster_image" name="poster_image" class="form-control" accept="image/*">
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Create Event</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

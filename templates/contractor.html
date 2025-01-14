@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Contractors</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #FF0404; /* Red background color */
+            color: #FFD9C4; /* Light beige text color */
+        }
+
+        header {
+            background: linear-gradient(to right, #FF0404, #FF0404); /* Red gradient header */
+            color: #FFD9C4; /* Light beige text color */
+            text-align: center;
+            padding: 1.5em 0;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            letter-spacing: 1px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .contractor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Ensures up to 3 cards per row */
+            gap: 20px;
+        }
+
+        .contractor-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contractor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .contractor-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .contractor-content {
+            padding: 15px;
+        }
+
+        .contractor-name {
+            font-size: 1.5em;
+            color: #FF0404; /* Red text for contractor name */
+            margin-bottom: 10px;
+        }
+
+        .contractor-details {
+            margin: 10px 0;
+            font-size: 0.9em;
+            color: #151514; /* Light beige text color for details */
+        }
+
+        .details-button {
+            display: inline-block;
+            background: #FF0404; /* Red button background */
+            color: #FFD9C4; /* Light beige text color on button */
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background 0.3s ease;
+        }
+
+        .details-button:hover {
+            background: #e00303; /* Darker red on hover */
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>All Contractors</h1>
+    </header>
+    <main>
+        <div class="contractor-grid">
+            {% for contractor in contractors %}
+            <div class="contractor-card">
+                <img src="{% if contractor.profile_image %}{{ contractor.profile_image.url }}{% else %}/media/default.png{% endif %}" alt="{{ contractor.name }}">
+                <div class="contractor-content">
+                    <h2 class="contractor-name">{{ contractor.name }}</h2>
+                    <p class="contractor-details">
+                        Contractor: {{ contractor.company_name }}<br>
+                        Email: {{ contractor.email }}<br>
+                        Phone: {{ contractor.phone }}
+                    </p>
+                    <a href="{% url 'contractor_profile' contractor.id %}" class="details-button">View Profile</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Event Management System</p>
+    </footer>
+</body>
+</html>

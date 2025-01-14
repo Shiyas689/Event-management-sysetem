@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Ticket</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #6e7f5a, #bdd2c5); /* Background gradient */
+        }
+
+        .ticket-container {
+            background-color: #ffffff;
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            position: relative;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .ticket-container:before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background-color: #4CAF50;
+            border-radius: 10px;
+        }
+
+        .ticket-container h1 {
+            color: #333;
+            font-size: 28px;
+            text-align: center;
+            margin: 10px 0; /* Reduced space for head */
+        }
+
+        .ticket-container h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .ticket-container p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .ticket-container .details {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .ticket-container .details p {
+            margin: 8px 0;
+            font-weight: 600;
+        }
+
+        .ticket-container .barcode {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .ticket-container .barcode img {
+            max-width: 300px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 20px;
+            color: #777;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center; /* Centering the buttons */
+            gap: 15px; /* Adding spacing between buttons */
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .btn-print {
+            background-color: #007bff;
+        }
+
+        .btn-print:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-home {
+            background-color: #f44336;
+        }
+
+        .btn-home:hover {
+            background-color: #e53935;
+        }
+
+        .thank-you-message {
+            margin-top: 30px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
+
+        .event-image img {
+            max-width: 100%;
+            max-height: 400px; /* Restrict height */
+            object-fit: contain; /* Maintain aspect ratio */
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ticket-container">
+        <h1>Event Ticket</h1>
+
+        <!-- Event Image (Centered) -->
+        <div class="event-image" style="text-align: center;">
+            {% if booking.event.poster_image %}
+                <img src="{{ booking.event.poster_image.url }}" alt="Event Image">
+            {% else %}
+                <p>No event image available.</p>
+            {% endif %}
+        </div>
+
+        <!-- Event Details -->
+        <h2>{{ booking.event.title }}</h2>
+
+        <div class="details">
+            <p><strong>Date:</strong> {{ booking.event.date }}</p>
+            <p><strong>Time:</strong> {{ booking.event.time }}</p>
+            <p><strong>Location:</strong> {{ booking.event.location }}</p>
+            <p><strong>Booked By:</strong> {{ booking.user.username }}</p>
+            <p><strong>Tickets:</strong> {{ booking.num_tickets }}</p>
+            <p><strong>Total Price:</strong> ${{ booking.total_price }}</p>
+        </div>
+
+        <!-- Barcode -->
+        <div class="barcode">
+            <h3>Scan for Details</h3>
+            <img src="data:image/png;base64,{{ barcode_image }}" alt="Barcode">
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="btn-container">
+            {% if booking.ticket %}
+                <a href="{% url 'ticket_view' ticket_id=booking.id %}" class="btn btn-print">Print Ticket</a>
+            {% endif %}
+            <a href="/" class="btn btn-home">Back to Home</a>
+        </div>
+
+        <!-- Thank You Message -->
+        <div class="thank-you-message">
+            <p>Thank you for booking! Enjoy the event!</p>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 Event Management System</p>
+        </div>
+    </div>
+
+    <script>
+        // Print functionality
+        document.querySelector('.btn-print').addEventListener('click', function(event) {
+            event.preventDefault();
+            window.print();
+        });
+    </script>
+</body>
+
+</html>

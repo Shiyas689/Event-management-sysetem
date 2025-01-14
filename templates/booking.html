@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Event</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #ff7e5f, #feb47b); /* Gradient background */
+            margin: 0;
+            padding: 0;
+            color: #fff;
+        }
+        h1 {
+            text-align: center;
+            padding: 30px;
+            font-size: 2.5em;
+            color: #fff;
+        }
+        p {
+            font-size: 1.1em;
+            margin: 10px 0;
+            padding: 5px;
+        }
+        .event-details {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px auto;
+            width: 80%;
+            max-width: 700px;
+        }
+        .event-details p {
+            font-size: 1.2em;
+            color: #fff;
+        }
+        form {
+            text-align: center;
+            margin-top: 30px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1.2em;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        a {
+            color: #fff;
+            font-size: 1.2em;
+            text-decoration: none;
+            margin-top: 20px;
+            display: inline-block;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Book Event: {{ event.title }}</h1>
+
+        <div class="event-details">
+            <p><strong>Date:</strong> {{ event.date }}</p>
+            <p><strong>Time:</strong> {{ event.time }}</p>
+            <p><strong>Location:</strong> {{ event.location }}</p>
+            <p><strong>Ticket Price:</strong> ${{ event.ticket_price }}</p>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Book Now</button>
+        </form>
+
+        <!-- Add link to the ticket page if a ticket exists -->
+        {% if booking.ticket %}
+    <p><a href="{% url 'ticket_view' ticket_id=booking.id %}">View Ticket</a></p>
+{% endif %}
+    </div>
+</body>
+</html>

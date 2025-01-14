@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Events</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #FF0404; /* Light background color */
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(to right, #FF0404, #FF0404); /* Red gradient header */
+            color: #FFD9C4; /* Light beige color for text */
+            text-align: center;
+            padding: 1.5em 0;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            letter-spacing: 1px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+            gap: 20px;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .event-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .event-content {
+            padding: 15px;
+        }
+
+        .event-title {
+            font-size: 1.5em;
+            color: #FF0404; /* Accent color (red) */
+            margin-bottom: 10px;
+        }
+
+        .event-details {
+            margin: 10px 0;
+            font-size: 0.9em;
+            color: #121111; /* Text color (light beige) */
+        }
+
+        .details-button {
+            display: inline-block;
+            background: #FF0404; /* Red button */
+            color: #FFD9C4; /* Light beige text */
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background 0.3s ease;
+        }
+
+        .details-button:hover {
+            background: #e00303; /* Slightly darker red on hover */
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Upcoming Events</h1>
+    </header>
+    <main>
+        <div class="event-grid">
+            {% for event in events %}
+            <div class="event-card">
+                <img src="{{ event.poster_image.url }}" alt="{{ event.title }} Poster">
+                <div class="event-content">
+                    <h2 class="event-title">{{ event.title }}</h2>
+                    <p class="event-details">
+                        Date: {{ event.date }} | Time: {{ event.time }}<br>
+                        Location: {{ event.location }}
+                    </p>
+                    <a href="{% url 'event_detail' event.id %}" class="details-button">View Details</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Event Management System</p>
+    </footer>
+</body>
+</html>
